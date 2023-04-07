@@ -1,6 +1,7 @@
 ####################################################################
 # This program takes input from a PIR sensor and determines if the 
-# room the sensor is placed in is occupied or not. 
+# room the sensor is placed in is occupied or not. If the sensor does 
+# not detect motion in 5 minutes it will mark the room as availible.
 ####################################################################
 
 import RPi.GPIO as GPIO
@@ -9,7 +10,8 @@ import time
 # set up the GPIO pins
 GPIO.setmode(GPIO.BCM)
 SENSOR = 4
-CHECK_TIME = 20
+CHECK_TIME = 300
+DEBUG = False
 GPIO.setup(SENSOR, GPIO.IN)
 
 # set the room status
@@ -24,10 +26,12 @@ def update_room_status():
     global occupied
     if motion_detected():
         occupied = True
-        print("Room occupied")
+        if DEBUG:
+            print("Room occupied")
     else:
         occupied = False
-        print("Room available")
+        if DEBUG:
+            print("Room available")
 
 # Loop forever, checking the sensor every second
 while True:
@@ -40,9 +44,13 @@ while True:
         while time_since_motion < CHECK_TIME:
             time.sleep(1)
             time_since_motion += 1
-            print(time_since_motion)
+
+            if DEBUG:
+                print(time_since_motion)
+
             if motion_detected():
                 break
         else:
             occupied = False
-            print("Room available")    
+            if DEBUG:
+                print("Room available")    
