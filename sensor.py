@@ -23,10 +23,10 @@ def update_room_status():
     global occupied
     if motion_detected():
         occupied = True
-        print("Room occupied")
+        #print("Room occupied")
     else:
         occupied = False
-        print("Room available")
+        #print("Room available")
 
 # Loop forever, checking the sensor every second
 while True:
@@ -41,6 +41,6 @@ while True:
             time_since_motion += 1
             if motion_detected():
                 break
-            else:
-                occupied = False
-                print("Room available")    
+        else:
+            occupied = False
+            print("Room available")    
