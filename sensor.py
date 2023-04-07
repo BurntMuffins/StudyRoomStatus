@@ -39,6 +39,7 @@ while True:
         while time_since_motion < 300:
             time.sleep(1)
             time_since_motion += 1
+            print(time_since_motion)
             if motion_detected():
                 break
         else:
