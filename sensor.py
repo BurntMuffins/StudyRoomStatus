@@ -35,7 +35,7 @@ while True:
     time.sleep(1)
 
     # If the room was occupied and motion was not detected for 5 minutes, mark it was available
-    if motion_detected() and occupied:
+    if not motion_detected() and occupied:
         time_since_motion = 0
         while time_since_motion < CHECK_TIME:
             time.sleep(1)
