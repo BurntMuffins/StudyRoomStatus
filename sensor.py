@@ -26,7 +26,7 @@ def update_room_status():
         print("Room occupied")
     else:
         occupied = False
-        #print("Room available")
+        print("Room available")
 
 # Loop forever, checking the sensor every second
 while True:
