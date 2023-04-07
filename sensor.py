@@ -9,6 +9,7 @@ import time
 # set up the GPIO pins
 GPIO.setmode(GPIO.BCM)
 SENSOR = 4
+CHECK_TIME = 20
 GPIO.setup(SENSOR, GPIO.IN)
 
 # set the room status
@@ -36,7 +37,7 @@ while True:
     # If the room was occupied and motion was not detected for 5 minutes, mark it was available
     if motion_detected() and occupied:
         time_since_motion = 0
-        while time_since_motion < 300:
+        while time_since_motion < CHECK_TIME:
             time.sleep(1)
             time_since_motion += 1
             print(time_since_motion)
