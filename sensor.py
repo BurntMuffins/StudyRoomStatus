@@ -7,7 +7,7 @@ from gpiozero import MotionSensor
 
 pir = MotionSensor(4)
 while True:
-    if pir.is_active:
+    if pir._active_state:
         print("working")
     
 
