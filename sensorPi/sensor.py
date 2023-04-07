@@ -6,6 +6,7 @@
 
 import RPi.GPIO as GPIO
 import time
+import sensorAPI as API
 
 # set up the GPIO pins
 GPIO.setmode(GPIO.BCM)
