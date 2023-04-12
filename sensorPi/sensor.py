@@ -35,23 +35,26 @@ def update_room_status():
             print("Room available")
 
 # Loop forever, checking the sensor every second
-while True:
-    update_room_status()
-    time.sleep(1)
+def runSensor():
+    while True:
+        update_room_status()
+        time.sleep(1)
 
-    # If the room was occupied and motion was not detected for 5 minutes, mark it was available
-    if not motion_detected() and occupied:
-        time_since_motion = 0
-        while time_since_motion < CHECK_TIME:
-            time.sleep(1)
-            time_since_motion += 1
+        # If the room was occupied and motion was not detected for 5 minutes, mark it was available
+        if not motion_detected() and occupied:
+            time_since_motion = 0
+            while time_since_motion < CHECK_TIME:
+                time.sleep(1)
+                time_since_motion += 1
 
-            if DEBUG:
-                print(time_since_motion)
+                if DEBUG:
+                    print(time_since_motion)
 
-            if motion_detected():
-                break
-        else:
-            occupied = False
-            if DEBUG:
-                print("Room available")    
+                if motion_detected():
+                    break
+            else:
+                occupied = False
+                if DEBUG:
+                    print("Room available")    
+
+runSensor()
