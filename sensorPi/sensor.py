@@ -39,26 +39,25 @@ def update_room_status():
     post("http://138.47.143.88:5000/update-room", json={"room": HOST, "status":occupied})
 
 # Loop forever, checking the sensor every second
-def runSensor():
-    while True:
-        update_room_status()
-        time.sleep(1)
 
-        # If the room was occupied and motion was not detected for 5 minutes, mark it was available
-        if not motion_detected() and occupied:
-            time_since_motion = 0
-            while time_since_motion < CHECK_TIME:
-                time.sleep(1)
-                time_since_motion += 1
+while True:
+    update_room_status()
+    time.sleep(1)
 
-                if DEBUG:
-                    print(time_since_motion)
+    # If the room was occupied and motion was not detected for 5 minutes, mark it was available
+    if not motion_detected() and occupied:
+        time_since_motion = 0
+        while time_since_motion < CHECK_TIME:
+            time.sleep(1)
+            time_since_motion += 1
 
-                if motion_detected():
-                    break
-            else:
-                occupied = False
-                if DEBUG:
-                    print("Room available")    
+            if DEBUG:
+                print(time_since_motion)
 
-runSensor()
+            if motion_detected():
+                break
+        else:
+            occupied = False
+            if DEBUG:
+                print("Room available")    
+
