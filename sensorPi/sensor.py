@@ -7,6 +7,7 @@
 import RPi.GPIO as GPIO
 import time
 import sensorAPI as API
+from requests import post
 
 # set up the GPIO pins
 GPIO.setmode(GPIO.BCM)
@@ -33,6 +34,7 @@ def update_room_status():
         occupied = False
         if DEBUG:
             print("Room available")
+        post("http://138.47.143.88:1234/numberInspector", json={"value": 5})
 
 # Loop forever, checking the sensor every second
 def runSensor():
