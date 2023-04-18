@@ -6,16 +6,15 @@
 
 import RPi.GPIO as GPIO
 import time
-import sensorAPI as API
 from requests import post
 import socket
 
 # set up the GPIO pins
 GPIO.setmode(GPIO.BCM)
-SENSOR = 4
+SENSOR_PIN = 4
 CHECK_TIME = 300
 DEBUG = False
-GPIO.setup(SENSOR, GPIO.IN)
+GPIO.setup(SENSOR_PIN, GPIO.IN)
 HOST = f"{socket.gethostname()}.local"
 
 # set the room status
@@ -23,7 +22,7 @@ occupied = False
 
 # A function that will check if the sensor was triggered
 def motion_detected():
-    return GPIO.input(SENSOR) == GPIO.HIGH
+    return GPIO.input(SENSOR_PIN) == GPIO.HIGH
 
 # a function that updates the room status
 def update_room_status():
@@ -39,7 +38,6 @@ def update_room_status():
     post("http://138.47.143.88:5000/update-room", json={"room": HOST, "status":occupied})
 
 # Loop forever, checking the sensor every second
-
 while True:
     update_room_status()
     time.sleep(1)
@@ -50,10 +48,8 @@ while True:
         while time_since_motion < CHECK_TIME:
             time.sleep(1)
             time_since_motion += 1
-
             if DEBUG:
                 print(time_since_motion)
-
             if motion_detected():
                 break
         else:

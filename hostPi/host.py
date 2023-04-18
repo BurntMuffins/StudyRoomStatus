@@ -1,9 +1,20 @@
-from requests import get, post
-from time import sleep
-from flask import Flask, jsonify, request
-import json
+####################################################################
+# An API that recieves information from the sensors in study rooms 
+# and puts the information into a JSON file to be stored and used
+# by the website.
+####################################################################
 
-NUM_OF_SENSORS = 2
+from flask import Flask, jsonify, request
+import json, os.path
+
+NUM_OF_SENSORS = 3
+
+# Creates a file that would hold the information from the sensors
+if not os.path.isfile('./data.json'):
+    f = open("data.json", 'x')
+    f.write("{}")
+    f.close()
+
 app = Flask(__name__)
 
 def load_data():
@@ -35,10 +46,12 @@ def updateRoom():
     except KeyError:
         return jsonify("Failed to update room " + str(roomToUpdate))
 
-# data = load_data()
-# data["study-room-status-1"] = {"occupied":False} # added a new room/updating it also
-# data["study-room-status-2"] = {"occupied":True}
-# save_data(data)
-# print(load_data()["study-room-status-2"]["occupied"])
 
-app.run(host="138.47.145.71", debug=True)
+# Creates all of the objects holding the status of each room
+data = load_data()
+for i in range(1, NUM_OF_SENSORS + 1):
+    data[f"study-room-status-{i}"] = {"occupied":False} # added a new room/updating it also
+
+save_data(data)
+
+app.run(host="192.168.1.33", debug=True)
