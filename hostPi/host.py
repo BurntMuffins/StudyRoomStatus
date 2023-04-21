@@ -27,7 +27,9 @@ def save_data(data):
         json.dump(data, file)
 
 #----- app routes -----#
-@app.route('/')
+
+#route to the html file for the webpage
+@app.route("/")
 def index():
     return render_template('index.html')
 
@@ -59,4 +61,5 @@ for i in range(1, NUM_OF_SENSORS + 1):
 
 save_data(data)
 
-app.run(host="localhost", debug=True)
+if __name__ == "__main__":
+    app.run(host="localhost", debug=True)
