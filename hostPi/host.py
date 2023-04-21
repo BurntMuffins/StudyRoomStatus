@@ -4,7 +4,7 @@
 # by the website.
 ####################################################################
 
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, render_template
 import json, os.path
 
 NUM_OF_SENSORS = 3
@@ -27,6 +27,10 @@ def save_data(data):
         json.dump(data, file)
 
 #----- app routes -----#
+@app.route('/')
+def index():
+    return render_template('index.html')
+
 @app.route("/check-room", methods=["POST"])
 def checkRoom():
     roomToCheck = request.json["room"]
@@ -55,4 +59,4 @@ for i in range(1, NUM_OF_SENSORS + 1):
 
 save_data(data)
 
-app.run(host="192.168.1.33", debug=True)
+app.run(host="localhost", debug=True)
