@@ -1,2 +1,0 @@
-#############################
-#used for database models
