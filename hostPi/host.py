@@ -26,6 +26,7 @@ def save_data(data):
     with open("data.json", "w") as file:
         json.dump(data, file)
 
+#----- app routes -----#
 @app.route("/check-room", methods=["POST"])
 def checkRoom():
     roomToCheck = request.json["room"]
