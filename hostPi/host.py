@@ -5,6 +5,7 @@
 ####################################################################
 
 from flask import Flask, jsonify, request, render_template
+from flask_cors import CORS
 import json, os.path
 
 NUM_OF_SENSORS = 3
@@ -16,6 +17,7 @@ if not os.path.isfile('./data.json'):
     f.close()
 
 app = Flask(__name__)
+cors = CORS(app)
 
 def load_data():
     with open("data.json", "r") as file:
@@ -35,6 +37,7 @@ def index():
 
 @app.route("/check-room", methods=["POST"])
 def checkRoom():
+    print(request.data)
     roomToCheck = request.json["room"]
     try:
         return jsonify(load_data()[roomToCheck])
