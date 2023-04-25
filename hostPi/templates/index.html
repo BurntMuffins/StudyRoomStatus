@@ -10,7 +10,6 @@
         <span style="font-size: 30px">Key:</span><img src="{{url_for('static', filename='temp_studyRoom_map.png')}}" align="right" style="width:420px;height:400px;" />
         <h3 style="font-size: 30px; color:green">Open Room</h3>
         <h3 style="font-size: 30px; color:red">Closed Room</h3>
-        <br>
         <script>
             async function postData(url = "", data = {}) {
                 let res = await fetch(url, {
@@ -21,16 +20,25 @@
                return res.json()
             }
             postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
-                (data) => document.getElementById("first").style.color = data["occupied"] ? "green" : "red"
+                (data) => document.getElementById("Floor1_1").style.color = data["occupied"] ? "green" : "red"
             );
             postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
-                (data) => document.getElementById("second").style.color = data["occupied"] ? "green" : "red"
+                (data) => document.getElementById("Floor1_2").style.color = data["occupied"] ? "green" : "red"
             );
             postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
-                (data) => document.getElementById("third").style.color = data["occupied"] ? "green" : "red"
+                (data) => document.getElementById("Floor1_3").style.color = data["occupied"] ? "green" : "red"
             );
         </script>
-        <h4 id="first" style="font-size: 30px">1st Floor:</h4>
-        <h4 id="second" style="font-size: 30px">2nd Floor:</h4>
-        <h4 id="third" style="font-size: 30px">3rd Floor:</h4>
+        <h4 id="First Floor" style="font-size: 30px">1st Floor:</h4>
+        <p id="Floor1_1" style="font-size: 25px">Room 1</p>
+        <p id="Floor1_2" style="font-size: 25px">Room 2</p>
+        <p id="Floor1_3" style="font-size: 25px">Room 3</p>
+        <h4 id="Second Floor" style="font-size: 30px">2nd Floor:</h4>
+        <p id="Floor2_1" style="font-size: 25px">Room 1: Unavailable</p>
+        <p id="Floor2_2" style="font-size: 25px">Room 2: Unavailable</p>
+        <p id="Floor2_3" style="font-size: 25px">Room 3: Unavailable</p>
+        <h4 id="Third Floor" style="font-size: 30px">3rd Floor:</h4>
+        <p id="Floor3_1" style="font-size: 25px">Room 1: Unavailable</p>
+        <p id="Floor3_2" style="font-size: 25px">Room 2: Unavailable</p>
+        <p id="Floor3_3" style="font-size: 25px">Room 3: Unavailable</p>
 </html>
