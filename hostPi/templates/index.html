@@ -11,7 +11,26 @@
         <h3 style="font-size: 30px; color:green">Open Room</h3>
         <h3 style="font-size: 30px; color:red">Closed Room</h3>
         <br>
-        <h4 style="font-size: 30px">1st Floor:</h4>
-        <h4 style="font-size: 30px">2nd Floor:</h4>
-        <h4 style="font-size: 30px">3rd Floor:</h4>
+        <script>
+            async function postData(url = "", data = {}) {
+                let res = await fetch(url, {
+                   method:"POST",
+                   headers: {"Content-Type": "application/json"},
+                   body:JSON.stringify(data)
+               });
+               return res.json()
+            }
+            postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
+                (data) => document.getElementById("first").style.color = data["occupied"] ? "green" : "red"
+            );
+            postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
+                (data) => document.getElementById("second").style.color = data["occupied"] ? "green" : "red"
+            );
+            postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
+                (data) => document.getElementById("third").style.color = data["occupied"] ? "green" : "red"
+            );
+        </script>
+        <h4 id="first" style="font-size: 30px">1st Floor:</h4>
+        <h4 id="second" style="font-size: 30px">2nd Floor:</h4>
+        <h4 id="third" style="font-size: 30px">3rd Floor:</h4>
 </html>
