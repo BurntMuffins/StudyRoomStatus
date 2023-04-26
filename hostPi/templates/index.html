@@ -27,15 +27,14 @@
                 (data) => document.getElementById("Floor1_2").style.color = data["occupied"] ? "red" : "green"
             );
             postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
-                (data) => document.getElementById("Floor1_3").style.color = data["occupied"] ? "red" : "green"
+                (data) => document.getElementById("Floor2_1").style.color = data["occupied"] ? "red" : "green"
             );
         </script>
         <h4 id="First Floor" style="font-size: 30px">1st Floor:</h4>
         <p id="Floor1_1" style="font-size: 25px">Room 1</p>
         <p id="Floor1_2" style="font-size: 25px">Room 2</p>
-        <p id="Floor1_3" style="font-size: 25px">Room 3</p>
         <h4 id="Second Floor" style="font-size: 30px">2nd Floor:</h4>
-        <p id="Floor2_1" style="font-size: 25px">Room 1: Unavailable</p>
+        <p id="Floor2_1" style="font-size: 25px">Room 1</p>
         <p id="Floor2_2" style="font-size: 25px">Room 2: Unavailable</p>
         <p id="Floor2_3" style="font-size: 25px">Room 3: Unavailable</p>
         <h4 id="Third Floor" style="font-size: 30px">3rd Floor:</h4>
