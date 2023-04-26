@@ -21,13 +21,13 @@
                return res.json()
             }
             postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
-                (data) => document.getElementById("Floor1_1").style.color = data["occupied"] ? "green" : "red"
+                (data) => document.getElementById("Floor1_1").style.color = data["occupied"] ? "red" : "green"
             );
             postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
-                (data) => document.getElementById("Floor1_2").style.color = data["occupied"] ? "green" : "red"
+                (data) => document.getElementById("Floor1_2").style.color = data["occupied"] ? "red" : "green"
             );
             postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
-                (data) => document.getElementById("Floor1_3").style.color = data["occupied"] ? "green" : "red"
+                (data) => document.getElementById("Floor1_3").style.color = data["occupied"] ? "red" : "green"
             );
         </script>
         <h4 id="First Floor" style="font-size: 30px">1st Floor:</h4>
