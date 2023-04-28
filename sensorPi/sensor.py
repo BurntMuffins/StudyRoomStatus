@@ -39,6 +39,7 @@ def update_room_status():
 
 # Loop forever, checking the sensor every second
 def runProgram():
+    global occupied
     try:
         while True:
             update_room_status()
