@@ -15,7 +15,7 @@ SENSOR_PIN = 4
 CHECK_TIME = 300
 DEBUG = False
 GPIO.setup(SENSOR_PIN, GPIO.IN)
-HOST = f"{socket.gethostname()}.local"
+HOST = f"{socket.gethostname()}"
 
 # set the room status
 occupied = False

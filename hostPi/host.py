@@ -10,15 +10,6 @@ import json, os.path
 
 NUM_OF_SENSORS = 3
 
-# Creates a file that would hold the information from the sensors
-if not os.path.isfile('./data.json'):
-    f = open("data.json", 'x')
-    f.write("{}")
-    f.close()
-
-app = Flask(__name__)
-cors = CORS(app)
-
 def load_data():
     with open("data.json", "r") as file:
         data = json.load(file)
@@ -27,13 +18,29 @@ def load_data():
 def save_data(data):
     with open("data.json", "w") as file:
         json.dump(data, file)
+        
+# Creates a file that would hold the information from the sensors
+if not os.path.isfile('./data.json'):
+    f = open("data.json", 'x')
+    f.write("{}")
+    f.close()
+
+    data = load_data()
+    for i in range(1, NUM_OF_SENSORS + 1):
+        data[f"study-room-status-{i}"] = {"occupied":False} # added a new room/updating it also
+
+    save_data(data)
+
+app = Flask(__name__)
+cors = CORS(app)
+
 
 #----- app routes -----#
 
 #route to the html file for the webpage
-@app.route("/")
-def index():
-    return render_template('index.html')
+# @app.route("/")
+# def index():
+#     return render_template('index.html')
 
 @app.route("/check-room", methods=["POST"])
 def checkRoom():
@@ -58,11 +65,7 @@ def updateRoom():
 
 
 # Creates all of the objects holding the status of each room
-data = load_data()
-for i in range(1, NUM_OF_SENSORS + 1):
-    data[f"study-room-status-{i}"] = {"occupied":False} # added a new room/updating it also
 
-save_data(data)
 
 if __name__ == "__main__":
     app.run(host="192.168.1.100", debug=True)
