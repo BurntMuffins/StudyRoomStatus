@@ -65,4 +65,4 @@ for i in range(1, NUM_OF_SENSORS + 1):
 save_data(data)
 
 if __name__ == "__main__":
-    app.run(host="localhost", debug=True)
+    app.run(host="192.168.1.100", debug=True)
