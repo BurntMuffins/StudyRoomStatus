@@ -35,7 +35,7 @@ def update_room_status():
         occupied = False
         if DEBUG:
             print("Room available")
-    post("http://192.168.1.142:5000/update-room", json={"room": HOST, "status":occupied})
+    post("http://192.168.1.100:5000/update-room", json={"room": HOST, "status":occupied})
 
 # Loop forever, checking the sensor every second
 while True:
