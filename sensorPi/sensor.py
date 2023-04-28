@@ -36,10 +36,11 @@ def update_room_status():
         occupied = False
         if DEBUG:
             print("Room available")
-    post("http://138.47.143.88:5000/update-room", json={"room": HOST, "status":occupied})
+    post("http://192.168.1.100:5000/update-room", json={"room": HOST, "status":occupied})
 
 # Loop forever, checking the sensor every second
 def runSensor():
+    global occupied
     while True:
         update_room_status()
         time.sleep(1)
