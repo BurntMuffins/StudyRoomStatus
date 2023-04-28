@@ -25,11 +25,6 @@ if not os.path.isfile('./data.json'):
     f.write("{}")
     f.close()
 
-    data = load_data()
-    for i in range(1, NUM_OF_SENSORS + 1):
-        data[f"study-room-status-{i}"] = {"occupied":False} # added a new room/updating it also
-
-    save_data(data)
 
 app = Flask(__name__)
 cors = CORS(app)
@@ -65,7 +60,11 @@ def updateRoom():
 
 
 # Creates all of the objects holding the status of each room
+data = load_data()
+for i in range(1, NUM_OF_SENSORS + 1):
+    data[f"study-room-status-{i}"] = {"occupied":False} # added a new room/updating it also
 
+save_data(data)
 
 if __name__ == "__main__":
-    app.run(host="192.168.1.100", debug=True)
+    app.run(host="study-room-status.local", debug=True)

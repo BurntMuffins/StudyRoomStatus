@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Study Room Status</title>
-        <meta http-equiv="refresh" content="5";url=http://localhost:5000 >
+        <meta http-equiv="refresh" content="5";url=http://study-room-status.local:5000 >
     </head>
     <body>
         <h1 style="font-size: 40px; color:blue">COES Study Room Status</h1>
@@ -20,13 +20,13 @@
                });
                return res.json()
             }
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
+            postData("http://study-room-status.local:5000/check-room", {"room": "study-room-status-1"}).then(
                 (data) => document.getElementById("Floor1_1").style.color = data["occupied"] ? "red" : "green"
             );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
+            postData("http://study-room-status.local:5000/check-room", {"room": "study-room-status-2"}).then(
                 (data) => document.getElementById("Floor1_2").style.color = data["occupied"] ? "red" : "green"
             );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
+            postData("http://study-room-status.local:5000/check-room", {"room": "study-room-status-3"}).then(
                 (data) => document.getElementById("Floor2_1").style.color = data["occupied"] ? "red" : "green"
             );
         </script>
