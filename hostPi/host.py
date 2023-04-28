@@ -38,9 +38,9 @@ cors = CORS(app)
 #----- app routes -----#
 
 #route to the html file for the webpage
-# @app.route("/")
-# def index():
-#     return render_template('index.html')
+@app.route("/")
+def index():
+    return render_template('index.html')
 
 @app.route("/check-room", methods=["POST"])
 def checkRoom():
