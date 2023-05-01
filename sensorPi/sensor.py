@@ -15,7 +15,7 @@ SENSOR_PIN = 4
 CHECK_TIME = 300
 DEBUG = False
 GPIO.setup(SENSOR_PIN, GPIO.IN)
-HOST = f"{socket.gethostname()}.local"
+HOST = f"{socket.gethostname()}"
 
 # set the room status
 occupied = False
@@ -35,25 +35,33 @@ def update_room_status():
         occupied = False
         if DEBUG:
             print("Room available")
-    post("http://138.47.143.88:5000/update-room", json={"room": HOST, "status":occupied})
+    post("http://study-room-status.local:5000/update-room", json={"room": HOST, "status":occupied})
 
 # Loop forever, checking the sensor every second
-while True:
-    update_room_status()
-    time.sleep(1)
-
-    # If the room was occupied and motion was not detected for 5 minutes, mark it was available
-    if not motion_detected() and occupied:
-        time_since_motion = 0
-        while time_since_motion < CHECK_TIME:
+def runProgram():
+    global occupied
+    try:
+        while True:
+            update_room_status()
             time.sleep(1)
-            time_since_motion += 1
-            if DEBUG:
-                print(time_since_motion)
-            if motion_detected():
-                break
-        else:
-            occupied = False
-            if DEBUG:
-                print("Room available")    
 
+            # If the room was occupied and motion was not detected for 5 minutes, mark it was available
+            if not motion_detected() and occupied:
+                time_since_motion = 0
+                while time_since_motion < CHECK_TIME:
+                    time.sleep(1)
+                    time_since_motion += 1
+                    if DEBUG:
+                        print(time_since_motion)
+                    if motion_detected():
+                        break
+                else:
+                    occupied = False
+                    if DEBUG:
+                        print("Room available")    
+
+    except ConnectionRefusedError:
+        pass
+
+while True:
+    runProgram()

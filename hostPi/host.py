@@ -10,15 +10,6 @@ import json, os.path
 
 NUM_OF_SENSORS = 3
 
-# Creates a file that would hold the information from the sensors
-if not os.path.isfile('./data.json'):
-    f = open("data.json", 'x')
-    f.write("{}")
-    f.close()
-
-app = Flask(__name__)
-cors = CORS(app)
-
 def load_data():
     with open("data.json", "r") as file:
         data = json.load(file)
@@ -27,6 +18,17 @@ def load_data():
 def save_data(data):
     with open("data.json", "w") as file:
         json.dump(data, file)
+        
+# Creates a file that would hold the information from the sensors
+if not os.path.isfile('./data.json'):
+    f = open("data.json", 'x')
+    f.write("{}")
+    f.close()
+
+
+app = Flask(__name__)
+cors = CORS(app)
+
 
 #----- app routes -----#
 
@@ -65,4 +67,4 @@ for i in range(1, NUM_OF_SENSORS + 1):
 save_data(data)
 
 if __name__ == "__main__":
-    app.run(host="localhost", debug=True)
+    app.run(host="study-room-status.local", debug=True)
