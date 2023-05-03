@@ -3,7 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title>Study Room Status</title>
-        <meta http-equiv="refresh" content="5";url=http://localhost:5000 >
+        <meta http-equiv="refresh" content="5";url=http://study-room-status.local:5000 >
     </head>
     <body>
         <h1 style="font-family: Gill Sans Extrabold; font-size: 70px; background-color: blue; color:white">COES Study Room Status</h1>
@@ -12,6 +12,7 @@
         <h3 style="font-family: Arial Black; font-size: 30px; color:green"><i>Open Room</i></h3>
         <h3 style="font-family: Georgia; font-size: 30px; color:red">Closed Room</h3>
         <script>
+            let HOST = "http://study-room-status.local:5000/check-room"
             async function postData(url = "", data = {}) {
                 let res = await fetch(url, {
                    method:"POST",
@@ -20,33 +21,35 @@
                });
                return res.json()
             }
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
-                (data) => document.getElementById("Floor1_1").style.color = data["occupied"] ? "red" : "green"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
-                (data) => document.getElementById("Floor1_1").style.fontFamily = data["occupied"] ? "Georgia" : "Arial Black"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-1"}).then(
-                (data) => document.getElementById("Floor1_1").style.fontStyle = data["occupied"] ? "initial" : "italic"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
-                (data) => document.getElementById("Floor1_2").style.color = data["occupied"] ? "red" : "green"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
-                (data) => document.getElementById("Floor1_2").style.fontFamily = data["occupied"] ? "Georgia" : "Arial Black"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-2"}).then(
-                (data) => document.getElementById("Floor1_2").style.fontStyle = data["occupied"] ? "initial" : "italic"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
-                (data) => document.getElementById("Floor2_1").style.color = data["occupied"] ? "red" : "green"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
-                (data) => document.getElementById("Floor2_1").style.fontFamily = data["occupied"] ? "Georgia" : "Arial Black"
-            );
-            postData("http://localhost:5000/check-room", {"room": "study-room-status-3"}).then(
-                (data) => document.getElementById("Floor2_1").style.fontStyle = data["occupied"] ? "initial" : "italic"
-            );
+
+            let sensorNumber = 1;
+
+            // create an array to hold all the promises
+            let promises = [];
+
+            // loop through 3 floors
+            for (let floor = 1; floor <= 3; floor++) {
+                let numSensors = floor === 1 ? 2 : 3; // determine number of sensors on this floor
+
+                // loop through sensors on this floor
+                for (let sensor = 1; sensor <= numSensors; sensor++) {
+                    // create the promise and push it to the array
+                    let promise = postData(HOST, {"room": "study-room-status-" + sensorNumber}).then(
+                        (data) => {
+                            document.getElementById("Floor"+floor+"_"+sensor).style.color = data["occupied"] ? "red" : "green";
+                            document.getElementById("Floor"+floor+"_"+sensor).style.fontFamily = data["occupied"] ? "Georgia" : "Arial Black";
+                            document.getElementById("Floor"+floor+"_"+sensor).style.fontStyle = data["occupied"] ? "initial" : "italic";
+                        }
+                    );
+                    promises.push(promise);
+                    sensorNumber++;
+                }
+            }
+
+            // wait for all the promises to complete before continuing
+            Promise.all(promises).then(() => {
+                console.log("All requests completed.");
+            });
         </script>
         <div style="border-style: outset; border-width: 5px; text-align: center; background-color: lightgray; border-color:blue; width:30%;">
             <h4 id="First Floor" style="font-size: 40px;">1st Floor:</h4>
@@ -56,15 +59,15 @@
         <hr align="left" style="width: 700px; height: 5px; background-color:gray">
         <div style="border-style: outset; border-width: 5px; text-align: center; background-color: lightgray; border-color:red; width:30%;">
             <h4 id="Second Floor" style="font-size: 40px">2nd Floor:</h4>
-            <p id="Floor2_1" style="font-size: 35px">Room 1</p>
-            <p id="Floor2_2" style="font-size: 35px">Room 2: Unavailable</p>
-            <p id="Floor2_3" style="font-size: 35px">Room 3: Unavailable</p>
+            <p id="Floor2_3" style="font-size: 35px">Room 1</p>
+            <p id="Floor2_4" style="font-size: 35px">Room 2</p>
+            <p id="Floor2_5" style="font-size: 35px">Room 3</p>
         </div>
         <hr align="left" style="width: 700px; size: 20; height: 5px; background-color:gray">
         <div style="border-style: outset; border-width: 5px; text-align: center; background-color: lightgray; border-color:blue; width:30%;">
             <h4 id="Third Floor" style="font-size: 40px">3rd Floor:</h4>
-            <p id="Floor3_1" style="font-size: 35px">Room 1: Unavailable</p>
-            <p id="Floor3_2" style="font-size: 35px">Room 2: Unavailable</p>
-            <p id="Floor3_3" style="font-size: 35px">Room 3: Unavailable</p>
+            <p id="Floor3_6" style="font-size: 35px">Room 1</p>
+            <p id="Floor3_7" style="font-size: 35px">Room 2</p>
+            <p id="Floor3_8" style="font-size: 35px">Room 3</p>
         </div>
 </html>

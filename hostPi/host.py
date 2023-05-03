@@ -8,7 +8,7 @@ from flask import Flask, jsonify, request, render_template
 from flask_cors import CORS
 import json, os.path
 
-NUM_OF_SENSORS = 3
+NUM_OF_SENSORS = 8
 
 def load_data():
     with open("data.json", "r") as file:
@@ -67,4 +67,4 @@ for i in range(1, NUM_OF_SENSORS + 1):
 save_data(data)
 
 if __name__ == "__main__":
-    app.run(host="localhost", debug=True)
+    app.run(host="study-room-status.local", debug=True)
