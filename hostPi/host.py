@@ -67,4 +67,4 @@ for i in range(1, NUM_OF_SENSORS + 1):
 save_data(data)
 
 if __name__ == "__main__":
-    app.run(host="localhost", debug=True)
+    app.run(host="study-room-status.local", debug=True)

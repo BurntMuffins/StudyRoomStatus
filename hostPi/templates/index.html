@@ -3,7 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>Study Room Status</title>
-        <!-- <meta http-equiv="refresh" content="5";url=http://localhost:5000 > -->
     </head>
     <body>
         <h1 style="font-family: Gill Sans Extrabold; font-size: 70px; background-color: blue; color:white">COES Study Room Status</h1>
@@ -12,7 +11,7 @@
         <h3 style="font-family: Arial Black; font-size: 30px; color:green"><i>Open Room</i></h3>
         <h3 style="font-family: Georgia; font-size: 30px; color:red">Closed Room</h3>
         <script>
-            let HOST = "http://localhost:5000/check-room"
+            let HOST = "http://study-room-status.local:5000/check-room"
             async function postData(url = "", data = {}) {
                 let res = await fetch(url, {
                    method:"POST",
